@@ -1,0 +1,25 @@
+#Stepovers
+
+Todo:
+
+  Backend:
+  - [] Add auth
+  - [] set up database and data model ( chaos seeker, tactical purist, blockbuster)
+
+  Frontend:
+    - [] NavBar
+    - [] Footer
+    - [] Homepage
+    - [] Onboarding (questionaire)
+    - [] Dashboard
+
+  More Backend:
+    - [] get real gameweek schedule
+    - [] Actually calculate games scores
+    - [] Cron job and cache games scores
+
+  More Frontend:
+    - [] Connect gameweek games to a real schedule
+
+  Follow ups:
+    - [] add analytics
