@@ -4,7 +4,7 @@ Todo:
 
   Backend:
   ✔ [] Add auth @started(26-05-27 12:51) @done(26-05-27 13:21) @lasted(30m31s)
-  - [] set up database and data model ( chaos seeker, tactical purist, blockbuster)
+  ✔ [] set up database and data model ( chaos seeker, tactical purist, blockbuster) @started(26-05-27 16:01) @done(26-05-27 17:59) @lasted(1h58m50s)
 
   Frontend:
     - [] NavBar
