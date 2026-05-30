@@ -9,7 +9,7 @@ import {
 export default function HomePage() {
   const { isSignedIn } = useAuth();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
+    <main className="flex-1 bg-gray-900 text-white">
       {`Hello there`}
 
       {isSignedIn ? (

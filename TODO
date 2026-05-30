@@ -7,11 +7,13 @@ Todo:
   ✔ [] set up database and data model ( chaos seeker, tactical purist, blockbuster) @started(26-05-27 16:01) @done(26-05-27 17:59) @lasted(1h58m50s)
 
   Frontend:
-    - [] NavBar
+    ✔ [] NavBar @started(26-05-29 16:22) @done(26-05-29 18:48) @lasted(2h26m17s)
+      -[] Hamburger menu 
     - [] Footer
     - [] Homepage
     - [] Onboarding (questionaire)
     - [] Dashboard
+      -[] Change link in Navbar
 
   More Backend:
     - [] get real gameweek schedule

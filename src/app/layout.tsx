@@ -1,8 +1,9 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Bebas_Neue, Syne } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import NavBar from "./_navbar/navbar";
 
 export const metadata: Metadata = {
   title: "Stepovers",
@@ -15,14 +16,31 @@ const geist = Geist({
   variable: "--font-geist-sans",
 });
 
+const bebas = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-bebas",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-syne",
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
-      <body>
-        <ClerkProvider>{children}</ClerkProvider>
-      </body>
+    <html
+      lang="en"
+      className={`${geist.variable} ${bebas.variable} ${syne.variable} mx-3 mt-3`}
+    >
+      <ClerkProvider>
+        <body className="mx-auto flex min-h-screen max-w-7xl flex-col gap-3 bg-black">
+          <NavBar />
+          {children}
+        </body>
+      </ClerkProvider>
     </html>
   );
 }
