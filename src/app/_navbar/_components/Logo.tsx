@@ -1,5 +1,7 @@
-import Image from "next/image";
-import logo from "../../_assets/Logo.svg";
+import Image, { type StaticImageData } from "next/image";
+import logoSrc from "../../_assets/Logo.svg";
+
+const logo = logoSrc as StaticImageData;
 
 export default function Logo() {
   return (
