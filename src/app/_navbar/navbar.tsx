@@ -6,7 +6,6 @@ import Logo from "./_components/logo";
 import Link from "next/link";
 import HamburgerButton from "./_components/hamburger-button";
 import { motion } from "motion/react";
-import { duration } from "drizzle-orm/gel-core";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
