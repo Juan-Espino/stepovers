@@ -8,12 +8,12 @@ Todo:
 
   Frontend:
     ✔ [] NavBar @started(26-05-29 16:22) @done(26-05-29 18:48) @lasted(2h26m17s)
-      -[] Hamburger menu - button and then overlay
+     ✔ [] Hamburger menu - button and then overlay @started(26-05-31 13:36) @done(26-05-31 16:50) @lasted(3h14m17s)
     - [] Footer
     - [] Homepage
     - [] Onboarding (questionaire)
     - [] Dashboard
-      -[] Change link in Navbar
+      - [] Change link in Navbar
 
   More Backend:
     - [] get real gameweek schedule

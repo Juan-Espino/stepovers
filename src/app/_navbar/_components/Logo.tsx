@@ -1,5 +1,5 @@
 import Image, { type StaticImageData } from "next/image";
-import logoSrc from "../../_assets/Logo.svg";
+import logoSrc from "../../_assets/stepovers-logo.svg";
 
 const logo = logoSrc as StaticImageData;
 
