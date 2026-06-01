@@ -34,12 +34,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geist.variable} ${bebas.variable} ${syne.variable} mx-3 mt-3`}
+      className={`${geist.variable} ${bebas.variable} ${syne.variable} min-h-dvh`}
     >
       <ClerkProvider>
-        <body className="mx-auto flex min-h-screen max-w-7xl flex-col gap-3 bg-black">
+        <body className="mx-auto flex min-h-dvh w-full max-w-7xl flex-col gap-3 bg-black px-3 pt-3">
           <NavBar />
-          {children}
+          <div className="flex flex-1 flex-col">{children}</div>
           <Footer />
         </body>
       </ClerkProvider>

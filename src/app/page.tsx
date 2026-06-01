@@ -9,7 +9,7 @@ import {
 export default function HomePage() {
   const { isSignedIn } = useAuth();
   return (
-    <main className="flex-1 bg-gray-900 text-white">
+    <main className="bg-gray-900 text-white">
       {`Hello there`}
 
       {isSignedIn ? (
