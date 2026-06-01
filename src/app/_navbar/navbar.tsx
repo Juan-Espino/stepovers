@@ -1,5 +1,10 @@
 "use client";
-import { SignInButton, useAuth, UserButton } from "@clerk/nextjs";
+import {
+  SignInButton,
+  useAuth,
+  UserButton,
+  SignOutButton,
+} from "@clerk/nextjs";
 
 import { useState } from "react";
 import Logo from "./_components/logo";
@@ -21,19 +26,19 @@ export default function NavBar() {
           animate={isOpen ? { y: 0 } : { y: 1000 }}
           transition={{ ease: "easeOut" }}
         >
-          <Link href={"./"} className="font- font-body px-3 py-2">
+          <Link href={"./"} className="font-body px-3 py-2 text-xl">
             dashboard
           </Link>
-          <Link href={"./"} className="font- font-body px-3 py-2">
+          <Link href={"./"} className="font-body px-3 py-2 text-xl">
             season stats
           </Link>
         </motion.div>
       </div>
       <Logo />
-      <Link href={"./"} className="font- font-body hidden px-3 py-2 lg:inline">
+      <Link href={"./"} className="font-body hidden px-3 py-2 lg:inline">
         dashboard
       </Link>
-      <Link href={"./"} className="font- font-body hidden px-3 py-2 lg:inline">
+      <Link href={"./"} className="font-body hidden px-3 py-2 lg:inline">
         season stats
       </Link>
 

@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { Geist, Bebas_Neue, Syne } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import NavBar from "./_navbar/navbar";
+import Footer from "./_footer/footer";
 
 export const metadata: Metadata = {
   title: "Stepovers",
@@ -39,6 +40,7 @@ export default function RootLayout({
         <body className="mx-auto flex min-h-screen max-w-7xl flex-col gap-3 bg-black">
           <NavBar />
           {children}
+          <Footer />
         </body>
       </ClerkProvider>
     </html>
