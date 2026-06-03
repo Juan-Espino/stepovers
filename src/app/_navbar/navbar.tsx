@@ -1,10 +1,5 @@
 "use client";
-import {
-  SignInButton,
-  useAuth,
-  UserButton,
-  SignOutButton,
-} from "@clerk/nextjs";
+import { SignInButton, useAuth, UserButton } from "@clerk/nextjs";
 
 import { useState } from "react";
 import Logo from "./_components/logo";

@@ -1,14 +1,11 @@
 "use client";
 
 import LeagueTitle from "../_components/league-title";
-import Image from "next/image";
-import Arrow from "../_assets/arrow.svg";
-import {
-  SignInButton,
-  SignOutButton,
-  useAuth,
-  UserButton,
-} from "@clerk/nextjs";
+import Image, { type StaticImageData } from "next/image";
+import arrowSrc from "../_assets/arrow.svg";
+
+const arrow = arrowSrc as StaticImageData;
+import { SignInButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 
 export default function Hero() {
@@ -28,7 +25,7 @@ export default function Hero() {
         </div>
         <Image
           alt="arrow-picture"
-          src={Arrow}
+          src={arrow}
           width={75}
           height={75}
           className="absolute -right-1/3 hidden min-[400px]:inline lg:-top-9 lg:right-[-33%] lg:size-32"
