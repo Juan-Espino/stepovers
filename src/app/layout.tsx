@@ -37,10 +37,23 @@ export default function RootLayout({
       className={`${geist.variable} ${bebas.variable} ${syne.variable} min-h-dvh`}
     >
       <ClerkProvider>
-        <body className="mx-auto flex min-h-dvh w-full max-w-7xl flex-col gap-3 bg-black px-3 pt-3">
-          <NavBar />
-          <div className="flex flex-1 flex-col">{children}</div>
-          <Footer />
+        <body className="relative isolate flex h-dvh w-full flex-col bg-black">
+          <div
+            id="blob"
+            aria-hidden="true"
+            className="pointer-events-none fixed top-1/4 -left-1/4 z-0 h-[250px] w-[250px] rounded-full bg-[radial-gradient(circle_at_center,#fe5b4b_0%,rgba(255,0,0,.5)_70%)] opacity-50 blur-[80px] lg:top-[40%] lg:left-[-12%] lg:h-[350px] lg:w-[350px] lg:bg-[radial-gradient(circle_at_center,#fe5b4b_0%,rgba(255,0,0,.5)_70%)]"
+          />
+          <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col px-3 pt-3">
+            <header className="mb-10 shrink-0">
+              <NavBar />
+            </header>
+            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
+              {children}
+            </div>
+          </div>
+          <div className="relative z-10">
+            <Footer />
+          </div>
         </body>
       </ClerkProvider>
     </html>

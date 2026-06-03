@@ -10,7 +10,9 @@ Todo:
     ✔ [] NavBar @started(26-05-29 16:22) @done(26-05-29 18:48) @lasted(2h26m17s)
      ✔ [] Hamburger menu - button and then overlay @started(26-05-31 13:36) @done(26-05-31 16:50) @lasted(3h14m17s)
     ✔ [] Footer @started(26-06-01 13:11) @done(26-06-01 13:42) @lasted(31m8s)
-    - [] Homepage
+    - [] Homepage @started(26-06-03 13:17)
+      - [] Hero @started(26-06-03 13:17)
+      - [] GameWeek
     - [] Onboarding (questionaire)
     - [] Dashboard
       - [] Change link in Navbar

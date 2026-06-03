@@ -1,25 +1,9 @@
-"use client";
-import {
-  SignInButton,
-  SignOutButton,
-  useAuth,
-  UserButton,
-} from "@clerk/nextjs";
+import Hero from "./_hero/hero";
 
 export default function HomePage() {
-  const { isSignedIn } = useAuth();
   return (
-    <main className="bg-gray-900 text-white">
-      {`Hello there`}
-
-      {isSignedIn ? (
-        <div>
-          <UserButton />
-          <SignOutButton />
-        </div>
-      ) : (
-        <SignInButton />
-      )}
+    <main className="text-white">
+      <Hero />
     </main>
   );
 }
