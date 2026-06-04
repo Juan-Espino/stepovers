@@ -33,7 +33,7 @@ export default function Hero() {
       </div>
       <p className="font-body text-grey text-center text-lg">
         {
-          "Age old question “Watch game or Watch highlights” can now be answered"
+          "Step Overs predicts which matches are worth watching and which are better as highlights."
         }
       </p>
       <div className="font-body border-grey/50 cursor-pointer rounded-3xl border-3 px-13 py-2 font-bold">
