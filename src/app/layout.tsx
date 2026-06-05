@@ -5,6 +5,7 @@ import { Geist, Bebas_Neue, Syne } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import NavBar from "./_navbar/navbar";
 import Footer from "./_footer/footer";
+import Blob from "./_components/blob";
 
 export const metadata: Metadata = {
   title: "Stepovers",
@@ -38,11 +39,7 @@ export default function RootLayout({
     >
       <ClerkProvider>
         <body className="relative isolate flex h-dvh w-full flex-col bg-black">
-          <div
-            id="blob"
-            aria-hidden="true"
-            className="pointer-events-none fixed top-1/4 -left-1/4 z-0 h-[250px] w-[250px] rounded-full bg-[radial-gradient(circle_at_center,#fe5b4b_0%,rgba(255,0,0,.5)_70%)] opacity-50 blur-[80px] lg:top-[40%] lg:left-[-12%] lg:h-[350px] lg:w-[350px] lg:bg-[radial-gradient(circle_at_center,#fe5b4b_0%,rgba(255,0,0,.5)_70%)]"
-          />
+          <Blob className="top-1/4 -left-1/4 z-0 h-[250px] w-[250px] lg:top-[40%] lg:left-[-12%] lg:h-[350px] lg:w-[350px]" />
           <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col px-3 pt-3">
             <header className="mb-10 shrink-0">
               <NavBar />

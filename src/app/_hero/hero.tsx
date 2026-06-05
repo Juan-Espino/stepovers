@@ -39,6 +39,7 @@ export default function Hero() {
       <div className="font-body border-grey/50 cursor-pointer rounded-3xl border-3 px-13 py-2 font-bold">
         {isSignedIn ? <Link href={"/"}> {"DASHBOARD"}</Link> : <SignInButton />}
       </div>
+      {/* gameweek */}
     </div>
   );
 }
