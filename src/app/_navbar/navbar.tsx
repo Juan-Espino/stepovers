@@ -30,10 +30,16 @@ export default function NavBar() {
         </motion.div>
       </div>
       <Logo />
-      <Link href={"./"} className="font-body hidden px-3 py-2 lg:inline">
+      <Link
+        href={"./"}
+        className="font-body hidden px-3 py-2 lg:inline lg:text-lg"
+      >
         dashboard
       </Link>
-      <Link href={"./"} className="font-body hidden px-3 py-2 lg:inline">
+      <Link
+        href={"./"}
+        className="font-body hidden px-3 py-2 lg:inline lg:text-lg"
+      >
         season stats
       </Link>
 

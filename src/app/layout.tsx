@@ -38,17 +38,15 @@ export default function RootLayout({
       className={`${geist.variable} ${bebas.variable} ${syne.variable} min-h-dvh`}
     >
       <ClerkProvider>
-        <body className="relative isolate flex h-dvh w-full flex-col bg-black">
+        <body className="relative flex w-full flex-col bg-black">
           <Blob className="top-1/4 -left-1/4 z-0 h-[250px] w-[250px] lg:top-[40%] lg:left-[-12%] lg:h-[350px] lg:w-[350px]" />
-          <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col px-3 pt-3">
+          <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-7xl flex-col px-3 pt-3">
             <header className="mb-10 shrink-0">
               <NavBar />
             </header>
-            <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
-              {children}
-            </div>
+            <div className="flex min-h-0 flex-col">{children}</div>
           </div>
-          <div className="relative z-10">
+          <div className="mt-10">
             <Footer />
           </div>
         </body>

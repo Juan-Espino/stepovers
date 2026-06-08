@@ -12,7 +12,8 @@ Todo:
     ✔ [] Footer @started(26-06-01 13:11) @done(26-06-01 13:42) @lasted(31m8s)
     - [] Homepage @started(26-06-03 13:17)
       ✔ [] Hero @started(26-06-03 13:17) @done(26-06-03 15:33) @lasted(2h16m6s)
-      - [] GameWeek
+      ✔ [] GameWeek @started(26-06-05 14:47) @done(26-06-07 18:08) @lasted(2d3h21m33s)
+
     - [] Onboarding (questionaire)
     - [] Dashboard
       - [] Change link in Navbar
@@ -28,3 +29,4 @@ Todo:
   Follow ups:
     - [] add analytics
     - [] clerk to production
+    - [] add image to back of gameweek
