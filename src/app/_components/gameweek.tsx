@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { motion } from "motion/react";
+
 import { gameweek30 as games } from "../sample-data/gameweek30";
 import badge from "../sample-data/man-united-badge.jpg";
 import badge2 from "../sample-data/liverpool-badge.jpg";
@@ -23,23 +25,48 @@ function filterGamesByDate(matches: readonly Match[]): MatchesByDate[] {
     matches,
   }));
 }
+
+const dateContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const matchCard = {
+  hidden: {
+    opacity: 0,
+    y: 10,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+
 export default function GameWeek() {
   const groupedByDate = filterGamesByDate(games.matches);
   return (
     <div className="font-body flex w-full flex-col items-center gap-6 overflow-y-auto">
       <h3 className="text-lg font-extralight">{`gameweek ${games.gameweek}`}</h3>
-      {groupedByDate.map((date, item) => (
+      {groupedByDate.map((date) => (
         // matches on a date container
-        <div
-          key={item}
+        <motion.div
+          variants={dateContainer}
+          initial="hidden"
+          animate="visible"
+          key={date.date}
           className="border-grey flex w-[90%] flex-col items-center justify-between gap-3 rounded-[45px] border p-3 lg:w-[70%]"
         >
           {/* match date */}
           <h2 className="text-grey text-2xl">{date.date}</h2>
-          {date.matches.map((match, item) => (
+          {date.matches.map((match) => (
             // home team, time, away team container
-            <div
-              key={item}
+            <motion.div
+              variants={matchCard}
+              key={match.id}
               className="flex h-15 w-11/12 rounded-[45px] bg-white text-black"
             >
               {/* hometeam */}
@@ -76,9 +103,9 @@ export default function GameWeek() {
                   {match.awayTeam.name}
                 </h4>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       ))}
     </div>
   );
