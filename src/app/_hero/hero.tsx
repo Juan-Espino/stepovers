@@ -41,9 +41,12 @@ export default function Hero() {
               "Step Overs predicts which matches are worth watching and which are better as highlights"
             }
           </p>
-          <div className="font-body border-grey/50 cursor-pointer rounded-[45px] border-3 px-13 py-2 font-bold lg:text-lg">
+          <div className="font-body border-grey/50 rounded-[45px] border-3 px-13 py-2 font-bold lg:text-lg">
             {isSignedIn ? (
-              <Link href={"/"}> {"DASHBOARD"}</Link>
+              <Link className="cursor-pointer" href={"/dashboard"}>
+                {" "}
+                {"DASHBOARD"}
+              </Link>
             ) : (
               <SignInButton />
             )}

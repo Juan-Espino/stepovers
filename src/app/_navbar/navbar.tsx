@@ -21,10 +21,18 @@ export default function NavBar() {
           animate={isOpen ? { y: 0 } : { y: 1000 }}
           transition={{ ease: "easeOut" }}
         >
-          <Link href={"./"} className="font-body px-3 py-2 text-xl">
+          <Link
+            href={"./"}
+            onClick={() => setIsOpen(!isOpen)}
+            className="font-body px-3 py-2 text-xl"
+          >
             dashboard
           </Link>
-          <Link href={"./"} className="font-body px-3 py-2 text-xl">
+          <Link
+            href={"./"}
+            onClick={() => setIsOpen(!isOpen)}
+            className="font-body px-3 py-2 text-xl"
+          >
             season stats
           </Link>
         </motion.div>
