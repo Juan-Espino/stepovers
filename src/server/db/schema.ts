@@ -14,10 +14,17 @@ export const createTable = pgTableCreator((name) => `stepovers_${name}`);
 export const users_table = createTable(
   "users_table",
   {
-    id: text().primaryKey().notNull().unique(),
+    id: text().primaryKey().notNull(),
     favoriteTeam: text("favorite_team").notNull(),
     playStyle: text("play_style").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
   (t) => [index("id_idx").on(t.id)],
 );
+
+export const teams_table = createTable("teams_table", {
+  id: text().primaryKey().notNull(),
+  name: text(),
+  shortName: text(),
+  badgeUrl: text(),
+});

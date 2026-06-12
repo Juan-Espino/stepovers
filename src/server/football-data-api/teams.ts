@@ -1,5 +1,29 @@
 import { env } from "~/env";
 import { NextResponse } from "next/server";
+import { db } from "../db";
+import { teams_table } from "../db/schema";
+
+type TeamInsert = typeof teams_table.$inferInsert;
+
+export type FootballDataTeam = {
+  id: number;
+  name: string;
+  shortName: string;
+  crest: string;
+};
+
+export type FootballDataTeamsResponse = {
+  teams: FootballDataTeam[];
+};
+
+function toTeamRow(team: FootballDataTeam): TeamInsert {
+  return {
+    id: String(team.id),
+    name: team.name,
+    shortName: team.shortName,
+    badgeUrl: team.crest, // API crest → DB badgeUrl
+  };
+}
 
 export async function GET() {
   const res = await fetch(
@@ -16,16 +40,14 @@ export async function GET() {
     );
   }
 
-  const data = await res.json();
+  const data = (await res.json()) as FootballDataTeamsResponse;
 
-  const teams = data.teams.map((team: any) => ({
-    id: team.id,
-    name: team.name,
-    shortName: team.shortName,
-    crest: team.crest,
-  }));
+  const teams = data.teams.map(toTeamRow);
 
-  console.log(teams);
+  await db.transaction(async (tx) => {
+    await tx.delete(teams_table);
+    await tx.insert(teams_table).values(teams);
+  });
 }
 
 // TODO:add refresh function
