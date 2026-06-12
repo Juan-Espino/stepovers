@@ -21,7 +21,7 @@ Todo:
   More Backend:
     - [] get real gameweek schedule
     - [] Actually calculate games scores
-    - [] Cron job and cache games scores
+    - [] Cron job and cache games scores (use nextjs next in fetch!)
 
   More Frontend:
     - [] Connect gameweek games to a real schedule

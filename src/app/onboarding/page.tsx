@@ -1,3 +1,11 @@
+import { GET } from "~/server/football-data-api/teams";
+
 export default function Onboarding() {
-  return <div>Onboarding</div>;
+  const test = GET();
+  // test;
+  return (
+    <div>
+      <div>Onboarding</div>
+    </div>
+  );
 }
