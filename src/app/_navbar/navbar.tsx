@@ -6,10 +6,13 @@ import Logo from "./_components/logo";
 import Link from "next/link";
 import HamburgerButton from "./_components/hamburger-button";
 import { motion } from "motion/react";
+import { usePathname } from "next/navigation";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const user = useAuth();
+  const pathName = usePathname();
+
   return (
     <div className="flex items-center text-white">
       <div className="flex flex-1 justify-start lg:hidden">
@@ -22,11 +25,11 @@ export default function NavBar() {
           transition={{ ease: "easeOut" }}
         >
           <Link
-            href={"./"}
+            href={pathName === "/" ? "/dashboard" : "/"}
             onClick={() => setIsOpen(!isOpen)}
             className="font-body px-3 py-2 text-xl"
           >
-            dashboard
+            {pathName === "/" ? "dashboard" : "games"}
           </Link>
           <Link
             href={"./"}
@@ -39,10 +42,10 @@ export default function NavBar() {
       </div>
       <Logo />
       <Link
-        href={"./"}
+        href={pathName === "/" ? "/dashboard" : "/"}
         className="font-body hidden px-3 py-2 lg:inline lg:text-lg"
       >
-        dashboard
+        {pathName === "/" ? "dashboard" : "games"}
       </Link>
       <Link
         href={"./"}
