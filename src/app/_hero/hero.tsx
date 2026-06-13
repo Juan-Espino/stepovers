@@ -21,10 +21,10 @@ export default function Hero() {
         <div className="flex flex-col items-center gap-6 lg:items-start">
           <div className="relative flex gap-1">
             <div>
-              <h1 className="font-heading text-5xl lg:text-7xl">
+              <h1 className="font-title text-5xl lg:text-7xl">
                 {"WASTE NO TIME"}
               </h1>
-              <h1 className="font-heading from-red-start to-red-end bg-linear-to-r bg-clip-text text-5xl text-transparent lg:text-7xl">
+              <h1 className="font-title from-red-start to-red-end bg-linear-to-r bg-clip-text text-5xl text-transparent lg:text-7xl">
                 {"WATCH OR PASS"}
               </h1>
             </div>
