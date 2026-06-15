@@ -14,8 +14,8 @@ Todo:
       ✔ [] Hero @started(26-06-03 13:17) @done(26-06-03 15:33) @lasted(2h16m6s)
       ✔ [] GameWeek @started(26-06-05 14:47) @done(26-06-07 18:08) @lasted(2d3h21m33s)
 
-    - [] Onboarding (questionaire) @started(26-06-14 13:10)
-      - [] DB:PUSH AFTER 
+    ✔ [] Onboarding (questionaire) @started(26-06-14 13:10) @done(26-06-15 16:17) @lasted(1d3h7m36s)
+      ✔ [] DB:PUSH AFTER @done(26-06-15 16:17)
     - [] Dashboard
       - [] Change link in Navbar
 
@@ -31,5 +31,6 @@ Todo:
     - [] add analytics
     - [] clerk to production
     - [] add image to back of gameweek
+    - [] loading on dashboard => game <== dashboard
     - [] add predict this weeks best matches under hero on large
     - [] add refresh button to teams.ts
