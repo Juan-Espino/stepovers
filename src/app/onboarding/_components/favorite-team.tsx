@@ -1,14 +1,6 @@
 import type { Team } from "~/server/db/schema";
 import type { Dispatch, SetStateAction } from "react";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 
 type FavoriteTeamProps = {
   selectedFavoriteTeam: string | null;
@@ -24,18 +16,35 @@ export default function FavoriteTeam({
   return (
     <Card className="border-grey/10 h-[445px] rounded-xl border bg-[#171717] shadow-none">
       <CardHeader className="text-white">
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Description</CardDescription>
-        <CardAction>X</CardAction>
+        <CardTitle className="text-center text-xl">
+          {"click on your favorite team"}
+        </CardTitle>
       </CardHeader>
-      <CardContent className="font-title flex h-full items-center justify-center p-0">
-        {teams.map((team, index) => (
-          <span className="text-4xl font-semibold text-white" key={index}>
-            {team.name}
-          </span>
+      <CardContent className="font-title grid flex-1 grid-cols-5 gap-1.5 px-3 pb-4 sm:gap-2 sm:px-4">
+        {teams.map((team) => (
+          <button
+            key={team.id}
+            type="button"
+            className={`flex min-h-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border px-1 py-2 text-center transition sm:px-2 ${
+              selectedFavoriteTeam === team.id
+                ? "border-red-start bg-red-start/10 text-red-start"
+                : "border-grey/10 bg-white/5 text-white hover:border-white/30 hover:bg-white/10"
+            }`}
+            onClick={() => {
+              setselectedFavoriteTeam(team.id);
+            }}
+          >
+            <img
+              src={team.badgeUrl}
+              alt={`${team.name} badge`}
+              className="h-8 w-8 object-contain sm:h-9 sm:w-9"
+            />
+            <span className="line-clamp-2 text-[10px] leading-tight font-semibold sm:text-xs">
+              {team.shortName}
+            </span>
+          </button>
         ))}
       </CardContent>
-      <CardFooter className="bg-grey">Footer</CardFooter>
     </Card>
   );
 }
