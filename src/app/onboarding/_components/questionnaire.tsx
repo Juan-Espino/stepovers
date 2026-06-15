@@ -11,6 +11,7 @@ import {
 import PlayStyle from "./playstyle";
 import FavoriteTeam from "./favorite-team";
 import { useState } from "react";
+import { Button } from "~/components/ui/button";
 
 type QuestionnaireProps = {
   teams: Team[];
@@ -37,13 +38,23 @@ export default function Questionnaire({ teams }: QuestionnaireProps) {
             />
           </CarouselItem>
           <CarouselItem>
-            <FavoriteTeam />
+            <FavoriteTeam
+              selectedFavoriteTeam={selectedFavoriteTeam}
+              setselectedFavoriteTeam={setselectedFavoriteTeam}
+              teams={teams}
+            />
           </CarouselItem>
         </CarouselContent>
         <CarouselPrevious className="border-grey/50 bg-[#171717] text-white" />
         <CarouselNext className="border-grey/50 bg-[#171717] text-white" />
       </Carousel>
-      <button type="submit">Submit</button>
+      <Button
+        size={"lg"}
+        variant={"default"}
+        disabled={!selectedPlayStyle || !selectedFavoriteTeam}
+      >
+        Submit
+      </Button>
     </form>
   );
 }
