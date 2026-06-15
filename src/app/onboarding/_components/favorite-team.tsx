@@ -1,5 +1,6 @@
 import type { Team } from "~/server/db/schema";
 import type { Dispatch, SetStateAction } from "react";
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 
 type FavoriteTeamProps = {
@@ -26,17 +27,19 @@ export default function FavoriteTeam({
             key={team.id}
             type="button"
             className={`flex min-h-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border px-1 py-2 text-center transition sm:px-2 ${
-              selectedFavoriteTeam === team.id
+              selectedFavoriteTeam === team.name
                 ? "border-red-start bg-red-start/10 text-red-start"
                 : "border-grey/10 bg-white/5 text-white hover:border-white/30 hover:bg-white/10"
             }`}
             onClick={() => {
-              setselectedFavoriteTeam(team.id);
+              setselectedFavoriteTeam(team.name);
             }}
           >
-            <img
+            <Image
               src={team.badgeUrl}
               alt={`${team.name} badge`}
+              width={36}
+              height={36}
               className="h-8 w-8 object-contain sm:h-9 sm:w-9"
             />
             <span className="line-clamp-2 text-[10px] leading-tight font-semibold sm:text-xs">
