@@ -13,14 +13,11 @@ import PlayStyle from "./playstyle";
 import FavoriteTeam from "./favorite-team";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
-import { useAuth } from "@clerk/nextjs";
-
 type QuestionnaireProps = {
   teams: Team[];
 };
 
 export default function Questionnaire({ teams }: QuestionnaireProps) {
-  const user = useAuth();
   const [selectedFavoriteTeam, setselectedFavoriteTeam] = useState<
     string | null
   >(null);
@@ -30,7 +27,7 @@ export default function Questionnaire({ teams }: QuestionnaireProps) {
     <form
       className="flex flex-col items-center gap-6"
       action={async () => {
-        onBoardUser(user.userId!, selectedFavoriteTeam!, selectedPlayStyle!);
+        await onBoardUser(selectedFavoriteTeam!, selectedPlayStyle!);
       }}
     >
       <Carousel className="mx-auto w-3/4">

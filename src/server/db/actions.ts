@@ -3,12 +3,14 @@
 import { redirect } from "next/navigation";
 import { MUTATIONS } from "./queries";
 import type { PlayStyleTypes } from "./schema";
+import { auth } from "@clerk/nextjs/server";
 
 export async function onBoardUser(
-  userId: string,
   favoriteTeam: string,
   playStyle: PlayStyleTypes,
 ) {
-  await MUTATIONS.onBoardUser(userId, favoriteTeam, playStyle);
+  const user = await auth();
+
+  await MUTATIONS.onBoardUser(user.userId!, favoriteTeam, playStyle);
   redirect("/dashboard");
 }
