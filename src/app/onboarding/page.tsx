@@ -1,4 +1,4 @@
-import { QUERIES } from "~/server/queries";
+import { QUERIES } from "~/server/db/queries";
 import Questionnaire from "./_components/questionnaire";
 
 export default async function Onboarding() {

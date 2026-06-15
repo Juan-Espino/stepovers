@@ -1,5 +1,6 @@
 "use client";
 import type { Team, PlayStyleTypes } from "~/server/db/schema";
+import { onBoardUser } from "~/server/db/actions";
 
 import {
   Carousel,
@@ -12,12 +13,14 @@ import PlayStyle from "./playstyle";
 import FavoriteTeam from "./favorite-team";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
+import { useAuth } from "@clerk/nextjs";
 
 type QuestionnaireProps = {
   teams: Team[];
 };
 
 export default function Questionnaire({ teams }: QuestionnaireProps) {
+  const user = useAuth();
   const [selectedFavoriteTeam, setselectedFavoriteTeam] = useState<
     string | null
   >(null);
@@ -25,14 +28,9 @@ export default function Questionnaire({ teams }: QuestionnaireProps) {
     useState<PlayStyleTypes | null>(null);
   return (
     <form
+      className="flex flex-col items-center gap-6"
       action={async () => {
-        console.log(
-          "submited",
-          " ",
-          selectedPlayStyle,
-          " ",
-          selectedFavoriteTeam,
-        );
+        onBoardUser(user.userId!, selectedFavoriteTeam!, selectedPlayStyle!);
       }}
     >
       <Carousel className="mx-auto w-3/4">
@@ -55,6 +53,7 @@ export default function Questionnaire({ teams }: QuestionnaireProps) {
         <CarouselNext className="border-grey/50 bg-[#171717] text-white" />
       </Carousel>
       <Button
+        className="w-fit"
         size={"lg"}
         variant={"default"}
         disabled={!selectedPlayStyle || !selectedFavoriteTeam}

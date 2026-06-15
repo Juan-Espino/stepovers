@@ -16,7 +16,7 @@ import {
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 
-export const playStyleValues = ["casual", "competitive", "tactical"] as const;
+export const playStyleValues = ["chaos", "big games", "tactical"] as const;
 export const playStyleEnum = pgEnum("play_style", playStyleValues);
 export type Team = typeof teams_table.$inferSelect;
 export type PlayStyleTypes = (typeof playStyleValues)[number];
