@@ -14,7 +14,8 @@ Todo:
       ✔ [] Hero @started(26-06-03 13:17) @done(26-06-03 15:33) @lasted(2h16m6s)
       ✔ [] GameWeek @started(26-06-05 14:47) @done(26-06-07 18:08) @lasted(2d3h21m33s)
 
-    - [] Onboarding (questionaire)
+    - [] Onboarding (questionaire) @started(26-06-14 13:10)
+      - [] DB:PUSH AFTER 
     - [] Dashboard
       - [] Change link in Navbar
 

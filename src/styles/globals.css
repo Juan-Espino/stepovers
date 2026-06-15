@@ -10,7 +10,6 @@
     var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-title: var(--font-bebas);
-  /* TODO:check thisssssssssssssssssssssssssssssssssssss */
   --font-body: var(--font-syne);
 
   /* Colors */
