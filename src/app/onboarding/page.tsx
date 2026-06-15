@@ -4,7 +4,7 @@ import Questionnaire from "./_components/questionnaire";
 export default async function Onboarding() {
   const teams = await QUERIES.getAllTeams();
   return (
-    <div className="">
+    <div className="flex min-h-0 flex-1">
       <Questionnaire teams={teams} />
     </div>
   );

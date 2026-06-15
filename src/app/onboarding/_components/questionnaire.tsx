@@ -25,12 +25,12 @@ export default function Questionnaire({ teams }: QuestionnaireProps) {
     useState<PlayStyleTypes | null>(null);
   return (
     <form
-      className="flex flex-col items-center gap-6"
+      className="flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-6 py-4"
       action={async () => {
         await onBoardUser(selectedFavoriteTeam!, selectedPlayStyle!);
       }}
     >
-      <Carousel className="mx-auto w-3/4">
+      <Carousel className="mx-auto w-full max-w-5xl px-10 sm:px-12">
         <CarouselContent>
           <CarouselItem>
             <PlayStyle

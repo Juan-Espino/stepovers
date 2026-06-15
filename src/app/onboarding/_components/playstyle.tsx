@@ -13,7 +13,7 @@ export default function PlayStyle({
   setSelectedPlayStyle,
 }: PlayStyleProps) {
   return (
-    <Card className="border-grey/10 h-[445px] rounded-xl border bg-[#171717] shadow-none">
+    <Card className="border-grey/10 h-[clamp(445px,62dvh,620px)] rounded-xl border bg-[#171717] shadow-none">
       <CardHeader className="text-white">
         <CardTitle className="text-center text-xl">
           {"click on your prefered playstyle"}
