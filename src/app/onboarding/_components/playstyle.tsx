@@ -24,7 +24,9 @@ export default function PlayStyle({
           <span
             key={index}
             className={`cursor-pointer p-4 text-4xl font-semibold ${
-              selectedPlayStyle === style ? "text-red-start" : "text-white"
+              selectedPlayStyle === style
+                ? "text-red-start"
+                : "hover:text-grey text-white"
             }`}
             onClick={() => {
               setSelectedPlayStyle(style);

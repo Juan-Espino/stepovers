@@ -26,7 +26,13 @@ export default function Questionnaire({ teams }: QuestionnaireProps) {
   return (
     <form
       action={async () => {
-        console.log("submited");
+        console.log(
+          "submited",
+          " ",
+          selectedPlayStyle,
+          " ",
+          selectedFavoriteTeam,
+        );
       }}
     >
       <Carousel className="mx-auto w-3/4">
