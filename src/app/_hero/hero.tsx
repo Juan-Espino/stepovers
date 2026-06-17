@@ -13,7 +13,7 @@ export default function Hero() {
   const { isSignedIn } = useAuth();
 
   return (
-    <section className="flex flex-col gap-6 overflow-hidden lg:max-h-[800px] lg:flex-row lg:gap-30">
+    <section className="flex flex-col gap-6 overflow-hidden lg:max-h-200 lg:flex-row lg:gap-30">
       {/* leftside */}
       <div className="flex flex-col items-center gap-6 lg:items-start">
         <LeagueTitle />
