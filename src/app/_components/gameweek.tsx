@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 
-import badge from "../sample-data/man-united-badge.jpg";
-import badge2 from "../sample-data/liverpool-badge.jpg";
 import type { MatchesByDate } from "~/server/football-data-api/teams";
 
 type GameWeekProps = {
@@ -71,7 +69,7 @@ export default function GameWeek({ gameweek, groupedByDate }: GameWeekProps) {
               </div>
               {/* time */}
               <span className="flex flex-0 items-center bg-gray-100 px-3">
-                {"11:11"}
+                {match.time}
               </span>
               {/* awayteam */}
               <div id="team2" className="flex flex-1 items-center px-3">

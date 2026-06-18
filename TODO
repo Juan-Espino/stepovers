@@ -22,7 +22,7 @@ Todo:
   More Backend:
     - [] get real gameweek schedule @started(26-06-17 14:07)
       - [x] convert api gameweek data to fit the frontends needs
-      - [] Cron job and cache gameweek games
+      - [x] simplify date and time
       - [] make fetch call variable to change everyweek
       - [] Cron job and cache gameweek games
         - [] make sure that if fetch call returns no matches that cache stays the same

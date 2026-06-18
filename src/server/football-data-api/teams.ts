@@ -2,9 +2,9 @@ import { env } from "~/env";
 import { NextResponse } from "next/server";
 import { db } from "../db";
 import { teams_table } from "../db/schema";
-import { gameweek30 } from "~/app/sample-data/gameweek30";
 
 type TeamInsert = typeof teams_table.$inferInsert;
+const matchDisplayTimeZone = "America/Los_Angeles";
 
 //objects from api
 
@@ -68,6 +68,10 @@ export type MatchFootBallData = {
   awayTeam: TeamFootBallData;
 };
 
+type FootballDataMatchesResponse = {
+  matches: MatchFootBallData[];
+};
+
 export type Team = {
   name: string;
   shortName: string;
@@ -77,6 +81,7 @@ export type Team = {
 export type Match = {
   id: string;
   kickoff: string;
+  time: string;
   gameweek: number;
   homeTeam: Team;
   awayTeam: Team;
@@ -95,10 +100,34 @@ export function toTeam(team: TeamFootBallData): Team {
   };
 }
 
+function formatMatchDate(utcDate: string) {
+  const kickoff = new Date(utcDate);
+
+  return {
+    day: new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      timeZone: matchDisplayTimeZone,
+    })
+      .format(kickoff)
+      .toLowerCase(),
+    time: new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+      timeZone: matchDisplayTimeZone,
+    })
+      .format(kickoff)
+      .toLowerCase(),
+  };
+}
+
 export function toMatch(match: MatchFootBallData): Match {
+  const formattedDate = formatMatchDate(match.utcDate);
+
   return {
     id: String(match.id),
     kickoff: match.utcDate,
+    time: formattedDate.time,
     gameweek: match.matchday,
     homeTeam: toTeam(match.homeTeam),
     awayTeam: toTeam(match.awayTeam),
@@ -108,7 +137,7 @@ export function toMatch(match: MatchFootBallData): Match {
 export function filterGamesByDate(matches: readonly Match[]): MatchesByDate[] {
   const groupedByDate = matches.reduce(
     (acc, match) => {
-      const day = match.kickoff.split("T")[0]!;
+      const day = formatMatchDate(match.kickoff).day;
       (acc[day] ??= []).push(match);
       return acc;
     },
@@ -139,7 +168,7 @@ export async function GetGameWeekSchedule(): Promise<GameWeekSchedule> {
     throw new Error("Failed to fetch Premier League Matches");
   }
 
-  const data = await res.json();
+  const data = (await res.json()) as FootballDataMatchesResponse;
   const matches: Match[] = data.matches.map((match: MatchFootBallData) =>
     toMatch(match),
   );
