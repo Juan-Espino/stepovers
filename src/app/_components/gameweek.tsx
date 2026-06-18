@@ -1,30 +1,14 @@
 import Image from "next/image";
 import { motion } from "motion/react";
 
-import { gameweek30 as games } from "../sample-data/gameweek30";
 import badge from "../sample-data/man-united-badge.jpg";
 import badge2 from "../sample-data/liverpool-badge.jpg";
-import type { Match } from "../sample-data/gameweek30";
+import type { MatchesByDate } from "~/server/football-data-api/teams";
 
-type MatchesByDate = {
-  date: string;
-  matches: Match[];
+type GameWeekProps = {
+  gameweek: number;
+  groupedByDate: MatchesByDate[];
 };
-function filterGamesByDate(matches: readonly Match[]): MatchesByDate[] {
-  const groupedByDay = matches.reduce(
-    (acc, match) => {
-      const day = match.kickoff.split(" ")[0]!;
-      (acc[day] ??= []).push(match);
-      return acc;
-    },
-    {} as Record<string, Match[]>,
-  );
-
-  return Object.entries(groupedByDay).map(([date, matches]) => ({
-    date,
-    matches,
-  }));
-}
 
 const dateContainer = {
   hidden: {},
@@ -46,11 +30,10 @@ const matchCard = {
   },
 };
 
-export default function GameWeek() {
-  const groupedByDate = filterGamesByDate(games.matches);
+export default function GameWeek({ gameweek, groupedByDate }: GameWeekProps) {
   return (
     <div className="font-body flex w-full flex-col items-center gap-6 overflow-y-auto">
-      <h3 className="text-lg font-extralight">{`gameweek ${games.gameweek}`}</h3>
+      <h3 className="text-lg font-extralight">{`gameweek ${gameweek}`}</h3>
       {groupedByDate.map((date) => (
         // matches on a date container
         <motion.div
@@ -75,13 +58,13 @@ export default function GameWeek() {
                 className="flex flex-1 items-center justify-between px-3"
               >
                 <h4 className="flex-1 px-1 text-center">
-                  {match.homeTeam.name}
+                  {match.homeTeam.shortName}
                 </h4>
 
                 <Image
                   className="lg:size-8"
                   alt="team1-badge"
-                  src={badge}
+                  src={match.homeTeam.badgeUrl}
                   width={25}
                   height={25}
                 />
@@ -95,12 +78,12 @@ export default function GameWeek() {
                 <Image
                   alt="team2-badge"
                   className="lg:size-8"
-                  src={badge2}
+                  src={match.awayTeam.badgeUrl}
                   width={25}
                   height={25}
                 />
                 <h4 className="flex-1 px-1 text-center">
-                  {match.awayTeam.name}
+                  {match.awayTeam.shortName}
                 </h4>
               </div>
             </motion.div>

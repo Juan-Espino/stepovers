@@ -1,29 +1,5 @@
 // src/app/sample-data/gameweek-30.ts
 
-export type Team = {
-  name: string;
-  shortName: string;
-  badgeUrl: string;
-};
-
-export type PlayStyleScores = {
-  chaosSeeker: number;
-  tacticalPurist: number;
-  rivalryHunter: number;
-  goalAddict: number;
-  underdogBeliever: number;
-  bigMatchFan: number;
-};
-
-export type Match = {
-  id: string;
-  kickoff: string;
-  homeTeam: Team;
-  awayTeam: Team;
-  entertainmentScore: number;
-  playStyleScores: PlayStyleScores;
-};
-
 export const gameweek30 = {
   gameweek: 30,
   season: "2026-27",

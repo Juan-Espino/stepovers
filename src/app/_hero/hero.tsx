@@ -8,8 +8,17 @@ const arrow = arrowSrc as StaticImageData;
 import { SignInButton, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import GameWeek from "../_components/gameweek";
+import type { Match } from "~/server/football-data-api/teams";
 
-export default function Hero() {
+type HeroProps = {
+  gameweek: number;
+  groupedByDate: {
+    date: string;
+    matches: Match[];
+  }[];
+};
+
+export default function Hero({ gameweek, groupedByDate }: HeroProps) {
   const { isSignedIn } = useAuth();
 
   return (
@@ -55,7 +64,7 @@ export default function Hero() {
       </div>
       {/* rightside */}
       {/* gameweek */}
-      <GameWeek />
+      <GameWeek gameweek={gameweek} groupedByDate={groupedByDate} />
     </section>
   );
 }

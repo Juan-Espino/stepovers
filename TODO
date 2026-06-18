@@ -20,8 +20,12 @@ Todo:
       ✔ [] Change link in Navbar @done(26-06-15 20:00)
 
   More Backend:
-    - [] get real gameweek schedule
+    - [] get real gameweek schedule @started(26-06-17 14:07)
+      - [x] convert api gameweek data to fit the frontends needs
       - [] Cron job and cache gameweek games
+      - [] make fetch call variable to change everyweek
+      - [] Cron job and cache gameweek games
+        - [] make sure that if fetch call returns no matches that cache stays the same
     - [] Actually calculate games scores
       - [] Cron job and cache games scores (use nextjs next in fetch!)
 
