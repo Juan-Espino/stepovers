@@ -5,6 +5,13 @@ import { teams_table } from "../db/schema";
 
 type TeamInsert = typeof teams_table.$inferInsert;
 const matchDisplayTimeZone = "America/Los_Angeles";
+const footballDataMatchesUrl =
+  "https://api.football-data.org/v4/competitions/PL/matches";
+const gameWeekScheduleCacheSeconds = 60 * 60 * 6;
+const seededFallbackDateRange = {
+  dateFrom: "2026-05-20",
+  dateTo: "2026-05-26",
+};
 
 //objects from api
 
@@ -121,6 +128,64 @@ function formatMatchDate(utcDate: string) {
   };
 }
 
+function formatApiDate(date: Date) {
+  return date.toISOString().split("T")[0]!;
+}
+
+function getZonedCalendarDate(date: Date) {
+  const dateParts = new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    timeZone: matchDisplayTimeZone,
+  }).formatToParts(date);
+
+  const year = Number(dateParts.find((part) => part.type === "year")?.value);
+  const month = Number(dateParts.find((part) => part.type === "month")?.value);
+  const day = Number(dateParts.find((part) => part.type === "day")?.value);
+
+  return new Date(Date.UTC(year, month - 1, day));
+}
+
+function getGameWeekDateRange(date = new Date()) {
+  const currentDate = getZonedCalendarDate(date);
+  const daysSinceWednesday = (currentDate.getUTCDay() + 4) % 7;
+  const dateFrom = new Date(currentDate);
+  dateFrom.setUTCDate(currentDate.getUTCDate() - daysSinceWednesday);
+
+  const dateTo = new Date(dateFrom);
+  dateTo.setUTCDate(dateFrom.getUTCDate() + 6);
+
+  return {
+    dateFrom: formatApiDate(dateFrom),
+    dateTo: formatApiDate(dateTo),
+  };
+}
+
+async function fetchPremierLeagueMatches({
+  dateFrom,
+  dateTo,
+}: {
+  dateFrom: string;
+  dateTo: string;
+}) {
+  const matchesUrl = new URL(footballDataMatchesUrl);
+  matchesUrl.searchParams.set("dateFrom", dateFrom);
+  matchesUrl.searchParams.set("dateTo", dateTo);
+
+  const res = await fetch(matchesUrl, {
+    headers: { "X-Auth-Token": env.FOOTBALL_DATA_API_KEY },
+    next: { revalidate: gameWeekScheduleCacheSeconds },
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch Premier League Matches");
+  }
+
+  const data = (await res.json()) as FootballDataMatchesResponse;
+  return data.matches.map((match) => toMatch(match));
+}
+
 export function toMatch(match: MatchFootBallData): Match {
   const formattedDate = formatMatchDate(match.utcDate);
 
@@ -156,24 +221,13 @@ type GameWeekSchedule = {
 };
 
 export async function GetGameWeekSchedule(): Promise<GameWeekSchedule> {
-  const res = await fetch(
-    "https://api.football-data.org/v4/competitions/PL/matches?dateFrom=2026-05-19&dateTo=2026-05-26",
+  const matches = await fetchPremierLeagueMatches(getGameWeekDateRange());
+  const scheduleMatches =
+    matches.length > 0
+      ? matches
+      : await fetchPremierLeagueMatches(seededFallbackDateRange);
 
-    {
-      headers: { "X-Auth-Token": env.FOOTBALL_DATA_API_KEY },
-    },
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch Premier League Matches");
-  }
-
-  const data = (await res.json()) as FootballDataMatchesResponse;
-  const matches: Match[] = data.matches.map((match: MatchFootBallData) =>
-    toMatch(match),
-  );
-
-  const groupedByDate = filterGamesByDate(matches);
+  const groupedByDate = filterGamesByDate(scheduleMatches);
 
   return {
     groupedByDate: groupedByDate,
