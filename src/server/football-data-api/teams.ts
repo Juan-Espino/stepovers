@@ -2,7 +2,7 @@ import { env } from "~/env";
 import { NextResponse } from "next/server";
 import { db } from "../db";
 import { teams_table } from "../db/schema";
-import { addScoreToTeam } from "./scores";
+import { addScoreToTeam } from "./score-map";
 
 type TeamInsert = typeof teams_table.$inferInsert;
 const matchDisplayTimeZone = "America/Los_Angeles";
@@ -65,6 +65,7 @@ export async function GET() {
 
 //objects from api
 export type TeamFootBallData = {
+  id: number;
   name: string;
   shortName: string;
   crest: string;
@@ -83,6 +84,7 @@ type FootballDataMatchesResponse = {
 };
 
 export type Team = {
+  id: number;
   name: string;
   shortName: string;
   badgeUrl: string;
@@ -104,6 +106,7 @@ export type MatchesByDate = {
 
 export function toTeam(team: TeamFootBallData): Team {
   return {
+    id: team.id,
     name: team.name,
     shortName: team.shortName,
     badgeUrl: team.crest,
@@ -223,17 +226,30 @@ type GameWeekSchedule = {
   gameweek: number;
 };
 
-export async function GetGameWeekSchedule(): Promise<GameWeekSchedule> {
+export type GameWeekMatches = {
+  matches: Match[];
+  gameweek: number;
+};
+
+export async function GetGameWeekMatches(): Promise<GameWeekMatches> {
   const matches = await fetchPremierLeagueMatches(getGameWeekDateRange());
   const scheduleMatches =
     matches.length > 0
       ? matches
       : await fetchPremierLeagueMatches(seededFallbackDateRange);
 
-  const groupedByDate = filterGamesByDate(scheduleMatches);
+  return {
+    matches: scheduleMatches,
+    gameweek: scheduleMatches[0]?.gameweek ?? 0,
+  };
+}
+
+export async function GetGameWeekSchedule(): Promise<GameWeekSchedule> {
+  const { matches, gameweek } = await GetGameWeekMatches();
+  const groupedByDate = filterGamesByDate(matches);
 
   return {
     groupedByDate: groupedByDate,
-    gameweek: groupedByDate[0]?.matches[0]?.gameweek ?? 0,
+    gameweek,
   };
 }

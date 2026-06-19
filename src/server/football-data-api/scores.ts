@@ -1,50 +1,107 @@
 import type { DashboardData } from "~/app/dashboard/_components/weekly-watch-dashboard";
-import { GetGameWeekSchedule } from "./teams";
+import { GetGameWeekMatches, type Match } from "./teams";
+import { addScoreToTeam } from "./score-map";
 
-// export function scheduleToMatches();
+type ScoredMatch = Match & {
+  entertainmentScore: number;
+};
+
+function getMatchEntertainmentScore(match: Match) {
+  return Math.min(
+    addScoreToTeam(match.homeTeam.id) + addScoreToTeam(match.awayTeam.id),
+    100,
+  );
+}
+
+function getFavoriteVerdict(score: number | null) {
+  if (score === null) {
+    return {
+      label: "no fixture",
+      detail:
+        "Your favorite team is not on this gameweek slate, so this week is all about the neutral pick.",
+      tone: "pass" as const,
+    };
+  }
+
+  if (score >= 80) {
+    return {
+      label: "watch",
+      detail:
+        "Your team clears the watch line this week. Make time for the full match instead of waiting for highlights.",
+      tone: "watch" as const,
+    };
+  }
+
+  return {
+    label: "highlights",
+    detail: "Stick to watching the highlights unless you are a fanatic.",
+    tone: "pass" as const,
+  };
+}
+
+function toDashboardMatch(match: ScoredMatch) {
+  return {
+    id: match.id,
+    kickoff: match.time,
+    entertainmentScore: match.entertainmentScore,
+    homeTeam: {
+      name: match.homeTeam.name,
+      shortName: match.homeTeam.shortName,
+      badgeUrl: match.homeTeam.badgeUrl,
+    },
+    awayTeam: {
+      name: match.awayTeam.name,
+      shortName: match.awayTeam.shortName,
+      badgeUrl: match.awayTeam.badgeUrl,
+    },
+  };
+}
+
 //caculate scores for all matchups and have a featured match
 //also get users favorite team and filter its match in return json
 //                          As well as a verdict to watch it or not!!!
 export async function calculateScorePerGame(
-  favorite_team: string,
+  favoriteTeam: string,
 ): Promise<DashboardData> {
-  const gameWeekSchedule = await GetGameWeekSchedule();
-  const matchesWithOutScore = gameWeekSchedule.groupedByDate.map((byDate) => {
-    return byDate.matches;
-  });
+  const gameWeekSchedule = await GetGameWeekMatches();
+  const scoredMatches: ScoredMatch[] = gameWeekSchedule.matches.map(
+    (match) => ({
+      ...match,
+      entertainmentScore: getMatchEntertainmentScore(match),
+    }),
+  );
+
+  const featuredMatch = scoredMatches.reduce<ScoredMatch | null>(
+    (currentBest, match) =>
+      currentBest === null ||
+      match.entertainmentScore > currentBest.entertainmentScore
+        ? match
+        : currentBest,
+    null,
+  );
+
+  if (!featuredMatch) {
+    throw new Error("No Premier League matches found for this gameweek");
+  }
+
+  const favoriteMatch =
+    scoredMatches.find(
+      (match) =>
+        match.homeTeam.name === favoriteTeam ||
+        match.awayTeam.name === favoriteTeam,
+    ) ?? null;
 
   return {
     gameweek: gameWeekSchedule.gameweek,
+    season: "2025-26",
+    favoriteTeam,
+    featuredMatch: toDashboardMatch(featuredMatch),
+    featuredReason:
+      "Highest combined team entertainment score of the gameweek.",
+    favoriteMatch: favoriteMatch ? toDashboardMatch(favoriteMatch) : null,
+    favoriteVerdict: getFavoriteVerdict(
+      favoriteMatch?.entertainmentScore ?? null,
+    ),
+    matches: scoredMatches.map(toDashboardMatch),
   };
-}
-
-//add entertainment scores manually (test)
-export function addScoreToTeam(id: number): number {
-  const score: Record<string, number> = {
-    "1044": 45,
-    "328": 36,
-    "341": 20,
-    "351": 17,
-    "354": 21,
-    "397": 17,
-    "402": 39,
-    "563": 29,
-    "57": 15,
-    "58": 22,
-    "61": 48,
-    "62": 11,
-    "63": 17,
-    "64": 48,
-    "65": 49,
-    "66": 50,
-    "67": 35,
-    "71": 0,
-    "73": 7,
-    "76": 3,
-    "1076": 46,
-    "322": 42,
-    "349": 38,
-  };
-
-  return score[String(id)] ?? 0;
 }

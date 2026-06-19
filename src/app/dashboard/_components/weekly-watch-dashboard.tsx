@@ -1,8 +1,10 @@
 import LeagueTitle from "~/app/_components/league-title";
+import Image from "next/image";
 
 type TeamDisplay = {
   readonly name: string;
   readonly shortName: string;
+  readonly badgeUrl: string;
 };
 
 type MatchDisplay = {
@@ -54,9 +56,14 @@ function TeamMark({
         align === "center" ? "justify-center text-center" : ""
       }`}
     >
-      <div className="border-grey/30 flex size-11 shrink-0 items-center justify-center rounded-full border bg-white text-sm font-black text-black">
-        {team.shortName}
-      </div>
+      <Image
+        className="border-grey/30 rounded-full border"
+        alt="team-badge"
+        src={team.badgeUrl}
+        width={44}
+        height={44}
+      />
+
       <p
         className={`font-body min-w-0 text-sm font-bold text-white sm:text-base ${
           align === "center" ? "max-w-48 text-center" : "truncate"
@@ -80,10 +87,14 @@ function ScorePill({ score }: { score: number }) {
 function FeaturedTeam({ team }: { team: TeamDisplay }) {
   return (
     <div className="flex min-w-0 flex-col items-center gap-3 rounded-[28px] px-4 py-5">
-      <div className="border-grey/20 flex size-16 items-center justify-center rounded-full border p-[2px]">
-        <div className="flex size-full items-center justify-center rounded-full text-lg font-black text-white">
-          {team.shortName}
-        </div>
+      <div className="border-grey/20 flex size-16 items-center justify-center rounded-full border p-0.5">
+        <Image
+          className="border-grey/20 rounded-full border p-0.5"
+          alt="team-badge"
+          src={team.badgeUrl}
+          width={64}
+          height={64}
+        />
       </div>
       <p className="font-title max-w-full text-center text-4xl leading-none text-white sm:text-5xl">
         {team.name}
