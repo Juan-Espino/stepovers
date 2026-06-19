@@ -1,1 +1,3 @@
-export function calculateScore() {}
+export function calculateScore() {
+  return 0;
+}
