@@ -1,6 +1,10 @@
 import { requireOnboardedUser } from "~/server/auth/require-onboarded-user";
-import WeeklyWatchDashboard from "./_components/weekly-watch-dashboard";
+import WeeklyWatchDashboard, {
+  type DashboardData,
+} from "./_components/weekly-watch-dashboard";
 import { gameweek30 } from "../sample-data/gameweek30";
+import { GET } from "~/server/football-data-api/teams";
+import { calculateScorePerGame } from "~/server/football-data-api/scores";
 
 function getFavoriteVerdict(score: number | null) {
   if (score === null) {
@@ -31,6 +35,8 @@ function getFavoriteVerdict(score: number | null) {
 
 export default async function Dashboard() {
   const user = await requireOnboardedUser();
+
+  // TODO:delete sample data
   const featuredMatch = gameweek30.matches.find(
     (match) => match.id === gameweek30.overallPick.matchId,
   );
@@ -45,18 +51,20 @@ export default async function Dashboard() {
     throw new Error("Match of the week not found");
   }
 
-  return (
-    <WeeklyWatchDashboard
-      gameweek={gameweek30.gameweek}
-      season={gameweek30.season}
-      favoriteTeam={user.favoriteTeam}
-      featuredMatch={featuredMatch}
-      featuredReason={gameweek30.overallPick.reason}
-      favoriteMatch={favoriteMatch}
-      favoriteVerdict={getFavoriteVerdict(
-        favoriteMatch?.entertainmentScore ?? null,
-      )}
-      matches={[...gameweek30.matches]}
-    />
-  );
+  const newwwwwwwwww = calculateScorePerGame(user.favoriteTeam);
+
+  const dashboardData: DashboardData = {
+    gameweek: gameweek30.gameweek,
+    season: gameweek30.season,
+    favoriteTeam: user.favoriteTeam,
+    featuredMatch,
+    featuredReason: gameweek30.overallPick.reason,
+    favoriteMatch,
+    favoriteVerdict: getFavoriteVerdict(
+      favoriteMatch?.entertainmentScore ?? null,
+    ),
+    matches: [...gameweek30.matches],
+  };
+
+  return <WeeklyWatchDashboard {...dashboardData} />;
 }

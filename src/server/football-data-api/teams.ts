@@ -2,6 +2,7 @@ import { env } from "~/env";
 import { NextResponse } from "next/server";
 import { db } from "../db";
 import { teams_table } from "../db/schema";
+import { addScoreToTeam } from "./scores";
 
 type TeamInsert = typeof teams_table.$inferInsert;
 const matchDisplayTimeZone = "America/Los_Angeles";
@@ -32,9 +33,11 @@ function toTeamRow(team: FootballDataTeam): TeamInsert {
     name: team.name,
     shortName: team.shortName,
     badgeUrl: team.crest, // API crest → DB badgeUrl
+    chaosScore: addScoreToTeam(team.id),
   };
 }
 
+//add current teams in the Prem to db teams_table
 export async function GET() {
   const res = await fetch(
     "https://api.football-data.org/v4/competitions/PL/teams",

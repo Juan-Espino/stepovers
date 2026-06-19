@@ -5,6 +5,7 @@ import {
   index,
   pgEnum,
   pgTableCreator,
+  smallint,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
@@ -39,4 +40,5 @@ export const teams_table = createTable("teams_table", {
   name: text().notNull(),
   shortName: text().notNull(),
   badgeUrl: text().notNull(),
+  chaosScore: smallint().notNull(),
 });

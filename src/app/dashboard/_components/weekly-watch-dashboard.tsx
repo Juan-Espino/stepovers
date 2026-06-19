@@ -30,6 +30,17 @@ type WeeklyWatchDashboardProps = {
   readonly matches: readonly MatchDisplay[];
 };
 
+export type DashboardData = {
+  readonly gameweek: number;
+  readonly season: string;
+  readonly favoriteTeam: string;
+  readonly featuredMatch: MatchDisplay;
+  readonly featuredReason: string;
+  readonly favoriteMatch: MatchDisplay | null;
+  readonly favoriteVerdict: FavoriteVerdict;
+  readonly matches: readonly MatchDisplay[];
+};
+
 function TeamMark({
   team,
   align = "start",
@@ -68,9 +79,9 @@ function ScorePill({ score }: { score: number }) {
 
 function FeaturedTeam({ team }: { team: TeamDisplay }) {
   return (
-    <div className=" flex min-w-0 flex-col items-center gap-3 rounded-[28px]  px-4 py-5">
-      <div className="border border-grey/20 flex size-16 items-center justify-center rounded-full  p-[2px]">
-        <div className="flex size-full items-center justify-center rounded-full text-white text-lg font-black ">
+    <div className="flex min-w-0 flex-col items-center gap-3 rounded-[28px] px-4 py-5">
+      <div className="border-grey/20 flex size-16 items-center justify-center rounded-full border p-[2px]">
+        <div className="flex size-full items-center justify-center rounded-full text-lg font-black text-white">
           {team.shortName}
         </div>
       </div>
