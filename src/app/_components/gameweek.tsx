@@ -48,19 +48,19 @@ export default function GameWeek({ gameweek, groupedByDate }: GameWeekProps) {
             <motion.div
               variants={matchCard}
               key={match.id}
-              className="flex h-15 w-11/12 rounded-[45px] bg-white text-black"
+              className="grid h-15 w-11/12 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] rounded-[45px] bg-white text-black"
             >
               {/* hometeam */}
               <div
                 id="team1"
-                className="flex flex-1 items-center justify-between px-3"
+                className="flex min-w-0 items-center justify-between gap-1 px-3"
               >
-                <h4 className="flex-1 px-1 text-center">
+                <h4 className="min-w-0 flex-1 px-1 text-center text-sm leading-tight break-words sm:text-base">
                   {match.homeTeam.shortName}
                 </h4>
 
                 <Image
-                  className="lg:size-8"
+                  className="size-6 shrink-0 lg:size-8"
                   alt="team1-badge"
                   src={match.homeTeam.badgeUrl}
                   width={25}
@@ -68,19 +68,22 @@ export default function GameWeek({ gameweek, groupedByDate }: GameWeekProps) {
                 />
               </div>
               {/* time */}
-              <span className="flex flex-0 items-center bg-gray-100 px-3">
+              <span className="flex min-w-13 shrink-0 items-center justify-center bg-gray-100 px-2 text-center text-sm leading-tight sm:px-3 sm:text-base">
                 {match.time}
               </span>
               {/* awayteam */}
-              <div id="team2" className="flex flex-1 items-center px-3">
+              <div
+                id="team2"
+                className="flex min-w-0 items-center gap-1 px-3"
+              >
                 <Image
                   alt="team2-badge"
-                  className="lg:size-8"
+                  className="size-6 shrink-0 lg:size-8"
                   src={match.awayTeam.badgeUrl}
                   width={25}
                   height={25}
                 />
-                <h4 className="flex-1 px-1 text-center">
+                <h4 className="min-w-0 flex-1 px-1 text-center text-sm leading-tight break-words sm:text-base">
                   {match.awayTeam.shortName}
                 </h4>
               </div>
