@@ -1,29 +1,97 @@
-# Create T3 App
+# Stepovers
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A Premier League entertainment factor calculator that helps fans find the most watchable matches of the week.
 
-## What's next? How do I make an app with this?
+## Overview
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+Stepovers ranks Premier League fixtures by a custom entertainment score, then gives signed-in users a personalized weekly dashboard based on their favorite team.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+I built this to turn match data into a product experience instead of a static stats page. The app combines a public gameweek view, user onboarding, authenticated dashboard routes, database-backed preferences, and score calculation logic.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+## Live App
 
-## Learn More
+[stepovers.vercel.app](https://stepovers.vercel.app/)
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## Features
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- Public Premier League gameweek schedule
+- Entertainment score calculation for each matchup
+- Featured match of the week
+- Clerk authentication
+- Onboarding flow for favorite team and fan style
+- Personalized dashboard with favorite-team verdicts
+- PostgreSQL-backed user preferences and team data
+- Football-Data API integration with cached schedule fetches
+- Responsive UI built around a sports-media visual style
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Tech Stack
 
-## How do I deploy this?
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Clerk
+- Drizzle ORM
+- PostgreSQL
+- Football-Data API
+- Vercel
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Project Structure
+
+```txt
+src/app                 App Router pages and layouts
+src/app/dashboard       Personalized match dashboard
+src/app/onboarding      User onboarding flow
+src/app/_components     Shared app UI
+src/server/db           Drizzle schema, queries, and mutations
+src/server/football-data-api  Premier League API and scoring helpers
+src/server/auth         Auth and onboarding guards
+```
+
+## What This Project Shows
+
+- Product thinking around a real fan problem: deciding which matches are worth watching
+- API integration, caching, and transformation of third-party sports data
+- Authenticated user flows with protected routes
+- Database-backed onboarding and user preferences
+- Score calculation logic that turns raw fixtures into ranked recommendations
+- Responsive frontend execution with a distinct visual direction
+
+## Running Locally
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Create an environment file:
+
+```bash
+cp .env.example .env
+```
+
+Fill in the required environment variables in `.env`, then run the development server:
+
+```bash
+npm run dev
+```
+
+Run checks before committing:
+
+```bash
+npm run typecheck
+npm run build
+```
+
+## Environment Variables
+
+See [.env.example](./.env.example) for the required variables.
+
+## Future Improvements
+
+- Expand the entertainment model beyond static team scores
+- Add historical results, form, rivalry, and table-position signals
+- Improve dashboard explanations for why a match receives its score
+- Add automated tests around scoring and onboarding logic
