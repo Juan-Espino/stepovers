@@ -32,7 +32,7 @@ export default function NavBar() {
             {pathName === "/" ? "dashboard" : "games"}
           </Link>
           <Link
-            href={"./"}
+            href={"https://www.premierleague.com/en/stats"}
             onClick={() => setIsOpen(!isOpen)}
             className="font-body px-3 py-2 text-xl"
           >
@@ -48,7 +48,7 @@ export default function NavBar() {
         {pathName === "/" ? "dashboard" : "games"}
       </Link>
       <Link
-        href={"./"}
+        href={"https://www.premierleague.com/en/stats"}
         className="font-body hidden px-3 py-2 lg:inline lg:text-lg"
       >
         season stats

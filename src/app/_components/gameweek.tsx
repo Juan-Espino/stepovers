@@ -55,12 +55,12 @@ export default function GameWeek({ gameweek, groupedByDate }: GameWeekProps) {
                 id="team1"
                 className="flex min-w-0 items-center justify-between gap-1 px-3"
               >
-                <h4 className="min-w-0 flex-1 px-1 text-center text-sm leading-tight break-words sm:text-base">
+                <h4 className="min-w-0 flex-1 px-1 text-center text-sm leading-tight wrap-break-word sm:text-base">
                   {match.homeTeam.shortName}
                 </h4>
 
                 <Image
-                  className="size-6 shrink-0 lg:size-8"
+                  className="size-6 shrink-0 min-[1024px]:size-0 min-[1200px]:size-8"
                   alt="team1-badge"
                   src={match.homeTeam.badgeUrl}
                   width={25}
@@ -72,18 +72,15 @@ export default function GameWeek({ gameweek, groupedByDate }: GameWeekProps) {
                 {match.time}
               </span>
               {/* awayteam */}
-              <div
-                id="team2"
-                className="flex min-w-0 items-center gap-1 px-3"
-              >
+              <div id="team2" className="flex min-w-0 items-center gap-1 px-3">
                 <Image
                   alt="team2-badge"
-                  className="size-6 shrink-0 lg:size-8"
+                  className="size-6 shrink-0 min-[1024px]:size-0 min-[1200px]:size-8"
                   src={match.awayTeam.badgeUrl}
                   width={25}
                   height={25}
                 />
-                <h4 className="min-w-0 flex-1 px-1 text-center text-sm leading-tight break-words sm:text-base">
+                <h4 className="min-w-0 flex-1 px-1 text-center text-sm leading-tight wrap-break-word sm:text-base">
                   {match.awayTeam.shortName}
                 </h4>
               </div>
