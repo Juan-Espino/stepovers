@@ -33,7 +33,9 @@ function toTeamRow(team: FootballDataTeam): TeamInsert {
     name: team.name,
     shortName: team.shortName,
     badgeUrl: team.crest, // API crest → DB badgeUrl
-    chaosScore: addScoreToTeam(team.id),
+    chaosScore: addScoreToTeam(team.id, "chaos"),
+    bigGamesScore: addScoreToTeam(team.id, "big games"),
+    tacticalScore: addScoreToTeam(team.id, "tactical"),
   };
 }
 
@@ -231,10 +233,12 @@ export type GameWeekMatches = {
   gameweek: number;
 };
 
+const isProduction = env.NODE_ENV === "production";
+
 export async function GetGameWeekMatches(): Promise<GameWeekMatches> {
   const matches = await fetchPremierLeagueMatches(getGameWeekDateRange());
   const scheduleMatches =
-    matches.length > 0
+    matches.length > 0 || isProduction
       ? matches
       : await fetchPremierLeagueMatches(seededFallbackDateRange);
 
