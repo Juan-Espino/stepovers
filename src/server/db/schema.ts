@@ -41,4 +41,6 @@ export const teams_table = createTable("teams_table", {
   shortName: text().notNull(),
   badgeUrl: text().notNull(),
   chaosScore: smallint().notNull(),
+  bigGamesScore: smallint().notNull(),
+  tacticalScore: smallint().notNull(),
 });

@@ -25,7 +25,7 @@ type WeeklyWatchDashboardProps = {
   readonly gameweek: number;
   readonly season: string;
   readonly favoriteTeam: string;
-  readonly featuredMatch: MatchDisplay;
+  readonly featuredMatch: MatchDisplay | null;
   readonly featuredReason: string;
   readonly favoriteMatch: MatchDisplay | null;
   readonly favoriteVerdict: FavoriteVerdict;
@@ -36,7 +36,7 @@ export type DashboardData = {
   readonly gameweek: number;
   readonly season: string;
   readonly favoriteTeam: string;
-  readonly featuredMatch: MatchDisplay;
+  readonly featuredMatch: MatchDisplay | null;
   readonly featuredReason: string;
   readonly favoriteMatch: MatchDisplay | null;
   readonly favoriteVerdict: FavoriteVerdict;
@@ -220,33 +220,47 @@ export default function WeeklyWatchDashboard({
       </section>
 
       <section className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
-        <article className="border-grey/20 flex flex-col items-center gap-6 rounded-[36px] border bg-[#171717] p-5 text-center sm:p-6">
-          <div className="relative flex w-full items-start justify-center">
-            <p className="font-body text-grey pt-2 text-center text-xs font-bold uppercase">
-              top pick
+        {featuredMatch ? (
+          <article className="border-grey/20 flex flex-col items-center gap-6 rounded-[36px] border bg-[#171717] p-5 text-center sm:p-6">
+            <div className="relative flex w-full items-start justify-center">
+              <p className="font-body text-grey pt-2 text-center text-xs font-bold uppercase">
+                top pick
+              </p>
+              <div className="absolute top-0 right-0">
+                <ScorePill score={featuredMatch.entertainmentScore} />
+              </div>
+            </div>
+
+            <div className="grid w-full gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
+              <FeaturedTeam team={featuredMatch.homeTeam} />
+              <div className="from-red-start to-red-end font-title mx-auto flex size-16 items-center justify-center rounded-full bg-linear-to-r text-3xl text-white shadow-[0_0_30px_rgba(254,91,75,0.25)]">
+                vs
+              </div>
+              <FeaturedTeam team={featuredMatch.awayTeam} />
+            </div>
+
+            <div className="border-grey/20 flex w-full flex-col items-center gap-3 rounded-3xl border bg-black/20 p-4">
+              <span className="font-body text-grey text-xs font-bold uppercase">
+                kickoff
+              </span>
+              <span className="font-body text-lg font-bold text-white">
+                {featuredMatch.kickoff}
+              </span>
+            </div>
+          </article>
+        ) : (
+          <article className="border-grey/20 flex min-h-80 flex-col items-center justify-center gap-4 rounded-[36px] border bg-[#171717] p-6 text-center">
+            <p className="font-body text-grey text-xs font-bold uppercase">
+              no top pick
             </p>
-            <div className="absolute top-0 right-0">
-              <ScorePill score={featuredMatch.entertainmentScore} />
-            </div>
-          </div>
-
-          <div className="grid w-full gap-4 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
-            <FeaturedTeam team={featuredMatch.homeTeam} />
-            <div className="from-red-start to-red-end font-title mx-auto flex size-16 items-center justify-center rounded-full bg-linear-to-r text-3xl text-white shadow-[0_0_30px_rgba(254,91,75,0.25)]">
-              vs
-            </div>
-            <FeaturedTeam team={featuredMatch.awayTeam} />
-          </div>
-
-          <div className="border-grey/20 flex w-full flex-col items-center gap-3 rounded-3xl border bg-black/20 p-4">
-            <span className="font-body text-grey text-xs font-bold uppercase">
-              kickoff
-            </span>
-            <span className="font-body text-lg font-bold text-white">
-              {featuredMatch.kickoff}
-            </span>
-          </div>
-        </article>
+            <h2 className="font-title text-5xl leading-none text-white">
+              no matches
+            </h2>
+            <p className="font-body text-grey max-w-sm text-sm leading-relaxed">
+              There are no Premier League matches scheduled this gameweek.
+            </p>
+          </article>
+        )}
 
         <FavoritePanel
           favoriteTeam={favoriteTeam}

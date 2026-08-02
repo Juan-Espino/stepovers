@@ -1,14 +1,16 @@
 import type { DashboardData } from "~/app/dashboard/_components/weekly-watch-dashboard";
 import { GetGameWeekMatches, type Match } from "./teams";
 import { addScoreToTeam } from "./score-map";
+import type { PlayStyleTypes } from "../db/schema";
 
 type ScoredMatch = Match & {
   entertainmentScore: number;
 };
 
-function getMatchEntertainmentScore(match: Match) {
+function getMatchEntertainmentScore(match: Match, play_style: PlayStyleTypes) {
   return Math.min(
-    addScoreToTeam(match.homeTeam.id) + addScoreToTeam(match.awayTeam.id),
+    addScoreToTeam(match.homeTeam.id, play_style) +
+      addScoreToTeam(match.awayTeam.id, play_style),
     100,
   );
 }
@@ -62,12 +64,13 @@ function toDashboardMatch(match: ScoredMatch) {
 //                          As well as a verdict to watch it or not!!!
 export async function calculateScorePerGame(
   favoriteTeam: string,
+  play_style: PlayStyleTypes,
 ): Promise<DashboardData> {
   const gameWeekSchedule = await GetGameWeekMatches();
   const scoredMatches: ScoredMatch[] = gameWeekSchedule.matches.map(
     (match) => ({
       ...match,
-      entertainmentScore: getMatchEntertainmentScore(match),
+      entertainmentScore: getMatchEntertainmentScore(match, play_style),
     }),
   );
 
@@ -80,10 +83,6 @@ export async function calculateScorePerGame(
     null,
   );
 
-  if (!featuredMatch) {
-    throw new Error("No Premier League matches found for this gameweek");
-  }
-
   const favoriteMatch =
     scoredMatches.find(
       (match) =>
@@ -91,13 +90,24 @@ export async function calculateScorePerGame(
         match.awayTeam.name === favoriteTeam,
     ) ?? null;
 
+  if (!featuredMatch) {
+    return {
+      gameweek: gameWeekSchedule.gameweek,
+      season: "2025-26",
+      favoriteTeam,
+      featuredMatch: null,
+      featuredReason: "No Premier League matches are scheduled this gameweek.",
+      favoriteMatch: null,
+      favoriteVerdict: getFavoriteVerdict(null),
+      matches: [],
+    };
+  }
   return {
     gameweek: gameWeekSchedule.gameweek,
-    season: "2025-26",
+    season: "2026-27",
     favoriteTeam,
     featuredMatch: toDashboardMatch(featuredMatch),
-    featuredReason:
-      "Highest combined team entertainment score of the gameweek.",
+    featuredReason: `Highest combined ${play_style} score of the gameweek.`,
     favoriteMatch: favoriteMatch ? toDashboardMatch(favoriteMatch) : null,
     favoriteVerdict: getFavoriteVerdict(
       favoriteMatch?.entertainmentScore ?? null,
