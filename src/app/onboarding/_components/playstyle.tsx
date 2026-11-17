@@ -21,19 +21,20 @@ export default function PlayStyle({
       </CardHeader>
       <CardContent className="font-title flex h-full flex-col items-center justify-around">
         {playStyleValues.map((style, index) => (
-          <span
+          <button
+            type="button"
+            data-feedback="nav"
+            aria-pressed={selectedPlayStyle === style}
             key={index}
             className={`cursor-pointer p-4 text-4xl font-semibold ${
-              selectedPlayStyle === style
-                ? "text-red-start"
-                : "hover:text-grey text-white"
+              selectedPlayStyle === style ? "text-red-start" : "text-white"
             }`}
             onClick={() => {
               setSelectedPlayStyle(style);
             }}
           >
             {style}
-          </span>
+          </button>
         ))}
       </CardContent>
     </Card>

@@ -25,6 +25,7 @@ export default function NavBar() {
           transition={{ ease: "easeOut" }}
         >
           <Link
+            data-feedback="nav"
             href={pathName === "/" ? "/dashboard" : "/"}
             onClick={() => setIsOpen(!isOpen)}
             className="font-body px-3 py-2 text-xl"
@@ -32,6 +33,7 @@ export default function NavBar() {
             {pathName === "/" ? "dashboard" : "games"}
           </Link>
           <Link
+            data-feedback="nav"
             target="_blank"
             href={"https://www.premierleague.com/en/stats"}
             onClick={() => setIsOpen(!isOpen)}
@@ -43,12 +45,14 @@ export default function NavBar() {
       </div>
       <Logo />
       <Link
+        data-feedback="nav"
         href={pathName === "/" ? "/dashboard" : "/"}
         className="font-body hidden px-3 py-2 lg:inline lg:text-lg"
       >
         {pathName === "/" ? "dashboard" : "games"}
       </Link>
       <Link
+        data-feedback="nav"
         target="_blank"
         href={"https://www.premierleague.com/en/stats"}
         className="font-body hidden px-3 py-2 lg:inline lg:text-lg"
@@ -57,7 +61,18 @@ export default function NavBar() {
       </Link>
 
       <div className="flex flex-1 justify-end">
-        {user.userId ? <UserButton /> : <SignInButton />}
+        {user.userId ? (
+          <UserButton />
+        ) : (
+          <SignInButton>
+            <button
+              data-feedback="nav"
+              className="font-body cursor-pointer px-3 py-2 lg:text-lg"
+            >
+              Sign in
+            </button>
+          </SignInButton>
+        )}
       </div>
     </div>
   );
