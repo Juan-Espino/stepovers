@@ -12,8 +12,9 @@ export default function HamburgerButton({
 }) {
   return (
     <button
+      data-feedback="icon"
       onClick={() => setIsOpen((prev) => !prev)}
-      className="flex h-10 w-10 flex-col items-center justify-center gap-1.5"
+      className="flex h-10 w-10 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-full"
       aria-label="Toggle menu"
       aria-expanded={isOpen}
     >

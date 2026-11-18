@@ -24,6 +24,8 @@ export default function FavoriteTeam({
       <CardContent className="font-title grid flex-1 grid-cols-5 gap-1.5 px-3 pb-4 sm:gap-2 sm:px-4">
         {teams.map((team) => (
           <button
+            data-feedback="outline"
+            aria-pressed={selectedFavoriteTeam === team.name}
             key={team.id}
             type="button"
             className={`flex min-h-0 cursor-pointer flex-col items-center justify-center gap-1 rounded-lg border px-1 py-2 text-center transition sm:px-2 ${

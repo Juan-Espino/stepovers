@@ -77,6 +77,7 @@ export type MatchFootBallData = {
   id: number;
   utcDate: string;
   matchday: number;
+  season: { startDate: string; endDate: string };
   homeTeam: TeamFootBallData;
   awayTeam: TeamFootBallData;
 };
@@ -97,6 +98,7 @@ export type Match = {
   kickoff: string;
   time: string;
   gameweek: number;
+  season: string;
   homeTeam: Team;
   awayTeam: Team;
 };
@@ -115,12 +117,15 @@ export function toTeam(team: TeamFootBallData): Team {
   };
 }
 
-function formatMatchDate(utcDate: string) {
+export function formatMatchDate(utcDate: string) {
   const kickoff = new Date(utcDate);
 
   return {
     day: new Intl.DateTimeFormat("en-US", {
       weekday: "long",
+      month: "short",
+      day: "numeric",
+      year: "numeric",
       timeZone: matchDisplayTimeZone,
     })
       .format(kickoff)
@@ -202,6 +207,7 @@ export function toMatch(match: MatchFootBallData): Match {
     kickoff: match.utcDate,
     time: formattedDate.time,
     gameweek: match.matchday,
+    season: `${match.season.startDate.slice(0, 4)}-${match.season.endDate.slice(2, 4)}`,
     homeTeam: toTeam(match.homeTeam),
     awayTeam: toTeam(match.awayTeam),
   };
@@ -218,7 +224,7 @@ export function filterGamesByDate(matches: readonly Match[]): MatchesByDate[] {
   );
 
   return Object.entries(groupedByDate).map(([date, matches]) => ({
-    date,
+    date: date.replace(/, \d{4}$/, ""),
     matches,
   }));
 }
@@ -231,6 +237,7 @@ type GameWeekSchedule = {
 export type GameWeekMatches = {
   matches: Match[];
   gameweek: number;
+  season: string;
 };
 
 const isProduction = env.NODE_ENV === "production";
@@ -242,9 +249,26 @@ export async function GetGameWeekMatches(): Promise<GameWeekMatches> {
       ? matches
       : await fetchPremierLeagueMatches(seededFallbackDateRange);
 
+  let season = scheduleMatches[0]?.season;
+  if (!season) {
+    const response = await fetch(
+      "https://api.football-data.org/v4/competitions/PL",
+      {
+        headers: { "X-Auth-Token": env.FOOTBALL_DATA_API_KEY },
+        next: { revalidate: gameWeekScheduleCacheSeconds },
+      },
+    );
+    if (!response.ok) throw new Error("Failed to fetch Premier League season");
+    const competition = (await response.json()) as {
+      currentSeason: { startDate: string; endDate: string };
+    };
+    season = `${competition.currentSeason.startDate.slice(0, 4)}-${competition.currentSeason.endDate.slice(2, 4)}`;
+  }
+
   return {
     matches: scheduleMatches,
     gameweek: scheduleMatches[0]?.gameweek ?? 0,
+    season,
   };
 }
 

@@ -1,5 +1,5 @@
 import type { DashboardData } from "~/app/dashboard/_components/weekly-watch-dashboard";
-import { GetGameWeekMatches, type Match } from "./teams";
+import { GetGameWeekMatches, formatMatchDate, type Match } from "./teams";
 import { addScoreToTeam } from "./score-map";
 import type { PlayStyleTypes } from "../db/schema";
 
@@ -45,6 +45,8 @@ function toDashboardMatch(match: ScoredMatch) {
   return {
     id: match.id,
     kickoff: match.time,
+    date: formatMatchDate(match.kickoff).day.replace(/, \d{4}$/, ""),
+    calendarDate: match.kickoff,
     entertainmentScore: match.entertainmentScore,
     homeTeam: {
       name: match.homeTeam.name,
@@ -93,7 +95,7 @@ export async function calculateScorePerGame(
   if (!featuredMatch) {
     return {
       gameweek: gameWeekSchedule.gameweek,
-      season: "2025-26",
+      season: gameWeekSchedule.season,
       favoriteTeam,
       featuredMatch: null,
       featuredReason: "No Premier League matches are scheduled this gameweek.",
@@ -104,7 +106,7 @@ export async function calculateScorePerGame(
   }
   return {
     gameweek: gameWeekSchedule.gameweek,
-    season: "2026-27",
+    season: gameWeekSchedule.season,
     favoriteTeam,
     featuredMatch: toDashboardMatch(featuredMatch),
     featuredReason: `Highest combined ${play_style} score of the gameweek.`,
