@@ -212,7 +212,7 @@ export default function WeeklyWatchDashboard({
 
   return (
     <main className="dashboard flex flex-1 flex-col gap-5 text-white">
-      <section className="dashboard-heading flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+      <section className="dashboard-heading flex flex-col items-center justify-between gap-4 text-center sm:flex-row sm:items-end sm:text-left">
         <div>
           <h1 className="font-title text-[40px] leading-none sm:text-[56px]">
             Matches of the{" "}
